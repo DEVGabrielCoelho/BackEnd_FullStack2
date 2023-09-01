@@ -16,6 +16,6 @@ server.use("/servicos", verifyJWT,routerServico);
 server.use("/categoria",rotaCategoriaProd);
 server.use(verifyAccess);
 
-server.listen(3308, "localhost", () => {
+server.listen(4018, 0.0.0.0, () => {
   console.log("Service running on http://localhost:3308 ");
 });
