@@ -4,18 +4,19 @@ import rotaCategoriaProd from "./Router/rotaCategoriaProd.js";
 import cors from "cors";
 import rotaProduto from "./Router/rotaProduto.js";
 import routerServico from "./Router/routerServicos.js";
-import {verifyAccess, verifyJWT} from "./Router/verifyAccessAndControl.js";
+import { verifyAccess, verifyJWT } from "./Router/verifyAccessAndControl.js";
+
 const server = express();
 server.use(cors({ origin: "*" }));
 server.use(express.urlencoded({ extended: false }));
 server.use(express.json());
 //Implementação do middleware de verificação JWT
-server.use("/pessoas", verifyJWT,routerPessoa);
-server.use("/produto", verifyJWT,rotaProduto);
-server.use("/servicos", verifyJWT,routerServico);
-server.use("/categoria",rotaCategoriaProd);
+server.use("/pessoas", verifyJWT, routerPessoa);
+server.use("/produto", verifyJWT, rotaProduto);
+server.use("/servicos", verifyJWT, routerServico);
+server.use("/categoria", rotaCategoriaProd);
 server.use(verifyAccess);
 
-server.listen(4018, 0.0.0.0, () => {
-  console.log("Service running on http://localhost:3308 ");
+server.listen(4018, "0.0.0.0", () => {
+  console.log("Service running on http://0.0.0.0:4018 ");
 });
