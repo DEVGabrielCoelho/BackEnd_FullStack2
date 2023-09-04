@@ -16,9 +16,10 @@ export default class PessoaBD {
         pessoas.telefone,
         pessoas.email,
         pessoas.tipo,
-        pessoas.profissao1     
+        pessoas.profissao1,
       ];
       await conect.query(sql, values);
+      global.poolConexoes.release(conexao);
     }
   }
 
@@ -36,9 +37,10 @@ export default class PessoaBD {
         pessoas.email,
         pessoas.tipo,
         pessoas.profissao1,
-        pessoas.cpf
+        pessoas.cpf,
       ];
       await conect.query(sql, values);
+      global.poolConexoes.release(conexao);
     }
   }
   async excluir(pessoas) {
@@ -47,6 +49,7 @@ export default class PessoaBD {
       const sql = "DELETE FROM pessoas WHERE cpf=? ";
       const values = [pessoas.cpf];
       await conect.query(sql, values);
+      global.poolConexoes.release(conexao);
     }
   }
   async consultar(term) {
@@ -54,6 +57,7 @@ export default class PessoaBD {
     const sql = "SELECT * FROM pessoas";
     const values = ["%" + term + "%"];
     const [rows] = await conect.query(sql, values);
+    global.poolConexoes.release(conexao);
     const listPessoas = [];
     for (const row of rows) {
       const pessoas = new Pessoas(
@@ -65,10 +69,7 @@ export default class PessoaBD {
         row["telefone"],
         row["email"],
         row["tipo"],
-        row["profissao1"]  
-        
-        
-        
+        row["profissao1"]
       );
       listPessoas.push(pessoas);
     }

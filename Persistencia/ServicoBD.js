@@ -12,14 +12,14 @@ export default class ServicoBD {
         servico.jornada,
         servico.descricao,
         servico.custo,
-        servico.modelo
+        servico.modelo,
       ];
       const resultado = await conexao.query(sql, values);
+      global.poolConexoes.release(conexao);
       return resultado[0].insertId;
     }
   }
 
-  
   async atualizar(servico) {
     if (servico instanceof Servico) {
       const conect = await Conect();
@@ -31,9 +31,10 @@ export default class ServicoBD {
         servico.descricao,
         servico.custo,
         servico.modelo,
-        servico.id
+        servico.id,
       ];
       await conect.query(sql, values);
+      global.poolConexoes.release(conexao);
     }
   }
 
@@ -43,6 +44,7 @@ export default class ServicoBD {
       const sql = "DELETE FROM servicos WHERE id=?";
       const values = [servico.id];
       await conect.query(sql, values);
+      global.poolConexoes.release(conexao);
     }
   }
 
@@ -51,6 +53,7 @@ export default class ServicoBD {
     const sql = "SELECT * FROM servicos";
     const values = ["%" + term + "%"];
     const [rows] = await conect.query(sql, values);
+    global.poolConexoes.release(conexao);
     const listServicos = [];
     for (const row of rows) {
       const servico = new Servico(

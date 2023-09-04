@@ -2,7 +2,6 @@ import conectar from "./Conexao.js";
 import CategoriaProd from "../Modelo/CategoriaProd.js";
 
 export default class CategoriaProdutoBD {
-  
   async incluir(categoriaProd) {
     if (categoriaProd instanceof CategoriaProd) {
       const conexao = await conectar();
@@ -11,6 +10,7 @@ export default class CategoriaProdutoBD {
       const valores = [categoriaProd.categoria];
 
       const resultado = await conexao.query(sql, valores);
+      global.poolConexoes.release(conexao);
       return resultado[0].insertId;
     }
   }
@@ -23,6 +23,7 @@ export default class CategoriaProdutoBD {
       const valores = [categoriaProd.categoria, categoriaProd.codigo];
 
       await conexao.query(sql, valores);
+      global.poolConexoes.release(conexao);
     }
   }
 
@@ -34,6 +35,7 @@ export default class CategoriaProdutoBD {
       const valores = [categoriaProd.codigo];
 
       await conexao.query(sql, valores);
+      global.poolConexoes.release(conexao);
     }
   }
 
@@ -41,14 +43,15 @@ export default class CategoriaProdutoBD {
     const conexao = await conectar();
 
     const sql = "SELECT * FROM categoria_produto WHERE categoria LIKE ?";
-    const valores = ['%' + termo + '%'];
+    const valores = ["%" + termo + "%"];
 
     const [rows] = await conexao.query(sql, valores);
+    global.poolConexoes.release(conexao);
 
     const listaCategorias = [];
 
     for (const row of rows) {
-      const categoriaProd = new CategoriaProd(row['codigo'], row['categoria']);
+      const categoriaProd = new CategoriaProd(row["codigo"], row["categoria"]);
       listaCategorias.push(categoriaProd);
     }
 
@@ -62,11 +65,12 @@ export default class CategoriaProdutoBD {
     const valores = [codigo];
 
     const [rows] = await conexao.query(sql, valores);
+    global.poolConexoes.release(conexao);
 
     const listaCategorias = [];
 
     for (const row of rows) {
-      const categoriaProd = new CategoriaProd(row['codigo'], row['categoria']);
+      const categoriaProd = new CategoriaProd(row["codigo"], row["categoria"]);
       listaCategorias.push(categoriaProd);
     }
 
