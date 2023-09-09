@@ -26,8 +26,8 @@ server.use(express.json());
 server.use("/pessoas", verifyJWT, routerPessoa);
 server.use("/produto", verifyJWT, rotaProduto);
 server.use("/servicos", verifyJWT, routerServico);
-server.use("/categoria", rotaCategoriaProd);
-server.use("/cidade", rotaCidade);
+server.use("/categoria", verifyJWT, rotaCategoriaProd);
+server.use("/cidade", verifyJWT, rotaCidade);
 server.use(verifyAccess);
 
 const localName = "localhost";
