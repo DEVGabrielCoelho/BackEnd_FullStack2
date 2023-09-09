@@ -1,8 +1,8 @@
 import mysql from "mysql2/promise";
 
 export default async function conectar() {
-  if (global.poolConexoes) {
-    return global.poolConexoes.getConecction();
+  if (global.poolConnections) {
+    return await global.poolConnections.getConnection();
   }
   const poolConexoes = await mysql.createConnection({
     host: "129.146.68.51",
@@ -18,6 +18,7 @@ export default async function conectar() {
     enableKeepAlive: true,
     keepAliveInitialDelay: 0,
   });
+
   global.poolConexoes = poolConexoes;
   return await poolConexoes.getConecction();
 }
