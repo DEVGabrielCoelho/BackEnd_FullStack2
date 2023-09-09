@@ -7,6 +7,7 @@ import express from "express";
 import { verifyAccess, verifyJWT } from "./Router/verifyAccessAndControl.js";
 
 const server = express();
+
 server.use((req, res, next) => {
   console.log("Origem da solicitação:", req.get("origin"));
 
@@ -19,7 +20,7 @@ server.use((req, res, next) => {
 
   next();
 });
-server.use(express.urlencoded({ extended: false }));
+server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
 //Implementação do middleware de verificação JWT
 server.use("/pessoas", verifyJWT, routerPessoa);
