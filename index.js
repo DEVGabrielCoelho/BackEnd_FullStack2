@@ -4,7 +4,7 @@ import routerPessoa from "./Router/RouterPessoas.js";
 import routerServico from "./Router/RouterServicos.js";
 import rotaCategoriaProd from "./Router/RotaCategoriaProd.js";
 import express from "express";
-import { verifyAccess, verifyJWT } from "./Router/verifyAccessAndControl.js";
+import { verifyAccess, verifyJWT } from "./Router/VerifyAccessAndControl.js";
 
 const server = express();
 
