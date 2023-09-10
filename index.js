@@ -1,8 +1,8 @@
-import rotaCidade from "./Router/rotaCidade.js";
-import rotaProduto from "./Router/rotaProduto.js";
+import rotaCidade from "./Router/RotaCidade.js";
+import rotaProduto from "./Router/RotaProduto.js";
 import routerPessoa from "./Router/RouterPessoas.js";
-import routerServico from "./Router/routerServicos.js";
-import rotaCategoriaProd from "./Router/rotaCategoriaProd.js";
+import routerServico from "./Router/RouterServicos.js";
+import rotaCategoriaProd from "./Router/RotaCategoriaProd.js";
 import express from "express";
 import { verifyAccess, verifyJWT } from "./Router/verifyAccessAndControl.js";
 
